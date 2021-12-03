@@ -43,6 +43,10 @@ $container->set(Environment::class, $twig);
 $router = new Router($container);
 $router->registerRoutes();
 
+if (php_sapi_name() == 'cli'){
+  return;
+}
+
 $requestUri = $_SERVER['REQUEST_URI'];
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 

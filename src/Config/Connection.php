@@ -11,7 +11,7 @@ class Connection
   {
     // On indique à Doctrine où aller chercher les entités
     // pour les analyser et les mapper dans la base de données
-    $paths = [__DIR__ . "/../src/Entity"];
+    $paths = [__DIR__ . "/../Entity"];
     $isDevMode = ($_ENV['APP_ENV'] === 'dev');
 
     $dbParams = [

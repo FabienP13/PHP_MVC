@@ -26,7 +26,7 @@ class IndexController extends AbstractController
     $em->persist($user);
     $em->flush();
   }
-
+  #[Route(path: "/contact", name:"contact")]
   public function contact()
   {
     echo $this->twig->render('index/contact.html.twig');
