@@ -12,19 +12,21 @@ class IndexController extends AbstractController
   #[Route(path: "/")]
   public function index(EntityManager $em)
   {
-    $user = new User();
+    
+    // $user = new User();
 
-    $user->setName("Bob")
-      ->setFirstName("John")
-      ->setUsername("Bobby")
-      ->setPassword("randompass")
-      ->setEmail("bob@bob.com")
-      ->setBirthDate(new DateTime('1981-02-16'));
+    // $user->setName("URL")
+    //   ->setFirstName("John")
+    //   ->setUsername("Bobby")
+    //   ->setPassword("randompass")
+    //   ->setEmail("bob@bob.com")
+    //   ->setBirthDate(new DateTime('1981-02-16'));
 
-    // On demande au gestionnaire d'entités de persister l'objet
-    // Attention, à ce moment-là l'objet n'est pas encore enregistré en BDD
-    $em->persist($user);
-    $em->flush();
+    // // On demande au gestionnaire d'entités de persister l'objet
+    // // Attention, à ce moment-là l'objet n'est pas encore enregistré en BDD
+    // $em->persist($user);
+    // $em->flush();
+    echo $this->twig->render('index/accueil.html.twig');
   }
   #[Route(path: "/contact", name:"contact")]
   public function contact()

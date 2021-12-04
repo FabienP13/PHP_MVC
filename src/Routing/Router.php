@@ -11,9 +11,11 @@ class Router
 {
   private $routes = [];
   private ContainerInterface $container;
+  
 
   public function __construct(ContainerInterface $container)
   {
+    
     $this->container = $container;
   }
 
@@ -73,6 +75,7 @@ class Router
    */
   public function execute(string $uri, string $httpMethod)
   {
+    
     $route = $this->getRoute($uri, $httpMethod);
 
     if ($route === null) {
@@ -87,6 +90,7 @@ class Router
 
     $method = $route['method'];
     $params = $this->getMethodParams($controllerName, $method);
+   
 
     call_user_func_array(
       [$controller, $method],

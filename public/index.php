@@ -10,15 +10,14 @@ if (
   return false;
 }
 
+use Twig\Environment;
+use App\Routing\Router;
 use App\Config\Connection;
 use App\Config\TwigEnvironment;
-use App\Controller\IndexController;
-use App\DependecyInjection\Container;
-use App\Routing\RouteNotFoundException;
-use App\Routing\Router;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Dotenv\Dotenv;
-use Twig\Environment;
+use App\DependecyInjection\Container;
+use App\Routing\RouteNotFoundException;
 
 // Env vars - Possibilité d'utiliser le pattern Adapter
 // Pour pouvoir varier les dépendances qu'on utilise
@@ -46,6 +45,7 @@ $router->registerRoutes();
 if (php_sapi_name() == 'cli'){
   return;
 }
+
 
 $requestUri = $_SERVER['REQUEST_URI'];
 $requestMethod = $_SERVER['REQUEST_METHOD'];

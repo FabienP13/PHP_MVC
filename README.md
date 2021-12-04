@@ -18,6 +18,13 @@
             --> Décodage du password
             --> Gestion des erreurs 
             --> Validation des formulaires 
-          
+            
 3- Gérer les droits d'accès 
     --> Autoriser l'accès à des pages sous condition(s)
+    --> Modifier affichage selon statut (enregistré ou non)
+
+
+PROBLEMES :
+
+1- Recupérer la requete post
+   --> supprimer caractères spéciaux
