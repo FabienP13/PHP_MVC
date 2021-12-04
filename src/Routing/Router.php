@@ -3,15 +3,17 @@
 namespace App\Routing;
 
 use App\Routing\Attribute\Route;
+use App\Utils\Filesystem;
 use Psr\Container\ContainerInterface;
 use ReflectionClass;
 use ReflectionMethod;
-use Twig\Environment;
 
 class Router
 {
   private $routes = [];
   private ContainerInterface $container;
+  private const CONTROLLERS_NAMESPACE = "App\\Controller\\";
+  private const CONTROLLERS_DIR = __DIR__ . "/../Controller";
 
   public function __construct(ContainerInterface $container)
   {
@@ -81,78 +83,78 @@ class Router
     }
 
     $controllerName = $route['controller'];
-
     $constructorParams = $this->getMethodParams($controllerName, '__construct');
     $controller = new $controllerName(...$constructorParams);
 
     $method = $route['method'];
     $params = $this->getMethodParams($controllerName, $method);
 
-   call_user_func_array(
-     [$controller,$method],
-     $params
-   );
+    call_user_func_array(
+      [$controller, $method],
+      $params
+    );
   }
+
   /**
-   * Resolve method's parameters frm the service container
+   * Resolve method's parameters from the service container
+   *
    * @param string $controller name of controller
    * @param string $method name of method
    * @return array
    */
-
-  private function getMethodParams(string $controller, $method):array
-
+  private function getMethodParams(string $controller, string $method): array
   {
     $methodInfos = new ReflectionMethod($controller . '::' . $method);
     $methodParameters = $methodInfos->getParameters();
-    $attributes = $methodInfos->getAttributes();
-
-    foreach($attributes as $attribute){
-      $attributeInstance = $attribute->newInstance();
-    }
 
     $params = [];
 
     foreach ($methodParameters as $param) {
-      $paramName = $param->getName(); 
+      $paramName = $param->getName();
       $paramType = $param->getType()->getName();
-      
-      if($this->container->has($paramType)){
+
+      if ($this->container->has($paramType)) {
         $params[$paramName] = $this->container->get($paramType);
       }
+    }
 
-      }
     return $params;
   }
 
-  public function registerRoutes()
+  public function registerRoutes(): void
   {
-    $files = array_slice(scandir(__DIR__ . '/../Controller'),2);
-    $controllersNamespace = "App\\Controller\\";
+    $classNames = Filesystem::getClassNames(self::CONTROLLERS_DIR);
 
-    foreach($files as $file){
-      $fqcn = $controllersNamespace . pathinfo($file, PATHINFO_FILENAME);
-      $reflection = new ReflectionClass($fqcn);
+    foreach ($classNames as $class) {
+      $this->registerRoute($class);
+    }
+  }
 
-      $methods = $reflection->getMethods(ReflectionMethod::IS_PUBLIC);
+  public function registerRoute(string $className): void
+  {
+    $fqcn = self::CONTROLLERS_NAMESPACE . $className;
+    $reflection = new ReflectionClass($fqcn);
 
-      foreach($methods as $method){
-        $attributes = $method->getAttributes(Route::class);
+    if ($reflection->isAbstract()) {
+      return;
+    }
 
-        foreach($attributes as $attribute){
-          /** @var Route */
-          $route = $attribute->newInstance();
+    $methods = $reflection->getMethods(ReflectionMethod::IS_PUBLIC);
 
-          $this->addRoute(
-            $route->getName(),
-            $route->getPath(),
-            $route->getHttpMethod(),
-            $fqcn,
-            $method->getName()
-          );
+    foreach ($methods as $method) {
+      $attributes = $method->getAttributes(Route::class);
 
-        }
+      foreach ($attributes as $attribute) {
+        /** @var Route */
+        $route = $attribute->newInstance();
 
+        $this->addRoute(
+          $route->getName(),
+          $route->getPath(),
+          $route->getHttpMethod(),
+          $fqcn,
+          $method->getName()
+        );
       }
     }
   }

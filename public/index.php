@@ -11,6 +11,7 @@ if (
 }
 
 use App\Config\Connection;
+use App\Config\Request;
 use App\Config\TwigEnvironment;
 use App\Controller\IndexController;
 use App\DependencyInjection\Container;
@@ -36,13 +37,19 @@ $twig = $twigEnvironment->init();
 
 //Container
 $container = new Container();
+$request = new Request();
+
 $container->set(EntityManager::class, $entityManager);
 $container->set(Environment::class, $twig);
 
 // Routage
-$router = new Router($container);
+$router = new Router($container, $request);
 
 $router->registerRoutes();
+
+if (php_sapi_name()=== 'cli'){
+  return;
+}
 
 $requestUri = $_SERVER['REQUEST_URI'];
 $requestMethod = $_SERVER['REQUEST_METHOD'];
