@@ -31,10 +31,8 @@ class RegisterController extends AbstractController
                 ->setEmail(trim($_POST['email']))
                 ->setUsername(trim($_POST['username']))
                 ->setPassword(password_hash(trim($_POST['password']), PASSWORD_BCRYPT))
-                ->setBirthDate(new dateTime($_POST['birthday']));
-
-                
-
+                ->setBirthDate(new dateTime($_POST['birthday'])); 
+                //commentaire
                 $em->persist($user);
                 $em->flush();
 
