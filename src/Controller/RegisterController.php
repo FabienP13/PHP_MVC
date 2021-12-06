@@ -17,12 +17,15 @@ class RegisterController extends AbstractController
     }
 
 
-    #[Route(path:'/register', httpMethod:'POST')]
+    #[Route(path:'/register/post', httpMethod:'POST')]
     public function postRegister(EntityManager $em)
     {
+      
         if(!empty($_POST)){
             if(!empty($_POST['name']) && !empty($_POST['firstName']) && !empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['username'])){
-
+                
+                $emailExist = $em->getRepository(User::class)->findBy(array('email'=>$_POST['email']));
+                if (!$emailExist){
                
                 $user = new User();
 
@@ -34,11 +37,16 @@ class RegisterController extends AbstractController
                 ->setBirthDate(new dateTime($_POST['birthday'])); 
                 //commentaire
                 $em->persist($user);
-                $em->flush();   
+                $em->flush();
 
+
+                }else{
+                    echo 'Email déjà prise';
+                }
             } else {
-                $msg = "il y a erreur";
+                $msg = "Veuillez remplir tout les champs";
                 echo $msg;
+                
             }
         }
        
