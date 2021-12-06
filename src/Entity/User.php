@@ -124,4 +124,8 @@ class User
 
     return $this;
   }
+
+  public function login ($username, $password){
+    
+  }
 }
