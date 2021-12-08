@@ -1,36 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% include 'partials/header.html.twig'%}
+<div class="container">
+
     <h1>Veuillez vous enregistrer</h1>
-    <form method="POST" action="/register">
+    <form method="POST" action="/register/post">
 
         <p>Nom :</p>
-        <input type="text" name="name">
+        <input type="text" name="name" required>
 
         <p>Prénom :</p>
-        <input type="text" name="firstName">
+        <input type="text" name="firstName" required>
 
         <p>Date d'anniversaire :</p>
-        <input type="date" name="birthday">
+        <input type="date" name="birthday" required>
 
         <p>E-mail :</p>
-        <input type="email" name="email">
+        <input type="email" name="email" required>
 
         <p>Username :</p>
-        <input type="text" name="username">
+        <input type="text" name="username" required>
 
         <p>Mot de passe :</p>
-        <input type="password"name="password">
+        <input type="password"name="password" required>
 
         <button type="submit">S'enregistrer</button>
         
 
     </form>
+    </div>
 </body>
 </html>

@@ -18,6 +18,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Dotenv\Dotenv;
 use App\DependecyInjection\Container;
 use App\Routing\RouteNotFoundException;
+use App\Session\Session;
 
 // Env vars - Possibilité d'utiliser le pattern Adapter
 // Pour pouvoir varier les dépendances qu'on utilise
@@ -32,12 +33,15 @@ $entityManager = $connection->init();
 $twigEnvironment = new TwigEnvironment();
 $twig = $twigEnvironment->init();
 
+// Session
+$session = new Session();
+
 //Container
 
 $container = new Container();
 $container->set(EntityManager::class, $entityManager);
 $container->set(Environment::class, $twig);
-
+$container->set(Session::class, $session);
 // Routage
 $router = new Router($container);
 $router->registerRoutes();

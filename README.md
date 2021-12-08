@@ -38,3 +38,34 @@ Puis on a utilisé l'entityManager avec la fonction : $user = $em->find(User:cla
 
 On a finalement trouvé en utilisant l'entityManager pour récupérer un repository (App\Entity\User) grâce à l'email renseignée par la personne voulant se connecter avec la fonction : 
 $users = $em->getRepository(User::class)->findBy(array('email' => $_POST['email'])); 
+
+3- Créer une session
+    1- Se connecter
+On crée une interface SessionInterface qui 
+On a rajouté un attribut boolean isAuth dans notre entity User.php  qui a une valeur par défault 'false'.
+
+Quand un user se connecte, dans la fonction postLogin() de notre LoginController, après avoir vérifier que les identifiants étaient identiques à ceux enregistrés dans la base de données, on passe cette variable à 'true' pour que l'on puisse savoir si un utilisateur est connecté ou non. 
+
+4- Erreurs liées à la connexion
+    Il faut avoir des erreurs si l'utilisateur qui souhaite se connecter renseigne un mauvais email et/ou mot de passe. 
+
+    Pour cela, on crée une classe Session.php avec 4 méthodes :
+        - une méthode ensureSession() pour vérifier si une ssesion a été créé.
+        - une méthode set() qui ajouter une valeur à une clé.
+        - une méthode get() qui récupére une valeur à fonction d'une clé
+        - une méthode delete() qui supprime une clé
+    On utilisera ces fonctions pour ajouter des messages d'erreurs.
+
+    On va donc instancier notre classe Session dans notre fichier bootstrap index.php, l'insérer dans le container et l'injecter dans notre fonction postLogin() pour pouvoir l'utiliser.
+
+    Pour ajouter des messages (error/success) liés à la connexion, nous avons ajouter une nouvelle clé et une nouvelle valeur, par exemple :
+    $session->set('success', 'Vous êtes connecté ');
+
+    Une fois le message créé, on le passe en paramètre de notre view dans la fonction render() de twig avec d'autres paramètres pour avoir des informations sur la personne connectée : 
+    echo $this->twig->render('index/accueil.html.twig', [
+         'sessionSuccess' => $session->get('success'),
+         'isAuth' => $user->getIsAuth(),
+         'firstname' => $_SESSION['firstname']
+    ]);
+
+

@@ -48,6 +48,11 @@ class User
    */
   private DateTime $birthDate;
 
+   /**
+   * @ORM\Column(type="boolean")
+   */
+  private bool $isAuth = false; 
+
   public function getId(): int
   {
     return $this->id;
@@ -127,5 +132,26 @@ class User
 
   public function login ($username, $password){
     
+  }
+
+
+  /**
+   * Get the value of isAuth
+   */ 
+  public function getIsAuth()
+  {
+    return $this->isAuth;
+  }
+
+  /**
+   * Set the value of isAuth
+   *
+   * @return  self
+   */ 
+  public function setIsAuth($isAuth)
+  {
+    $this->isAuth = $isAuth;
+
+    return $this;
   }
 }
