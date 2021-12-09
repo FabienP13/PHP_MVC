@@ -4,33 +4,35 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Routing\Attribute\Route;
+use App\Session\Session;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 
 class IndexController extends AbstractController
 {
   #[Route(path: "/")]
-  public function index(EntityManager $em)
+  public function index(EntityManager $em, Session $session)
   {
+    session_start();
+    if(!empty($_SESSION) ){
+    $user = $em->getRepository(User::class)->find($_SESSION['id']);
     
-    // $user = new User();
-
-    // $user->setName("URL")
-    //   ->setFirstName("John")
-    //   ->setUsername("Bobby")
-    //   ->setPassword("randompass")
-    //   ->setEmail("bob@bob.com")
-    //   ->setBirthDate(new DateTime('1981-02-16'));
-
-    // // On demande au gestionnaire d'entités de persister l'objet
-    // // Attention, à ce moment-là l'objet n'est pas encore enregistré en BDD
-    // $em->persist($user);
-    // $em->flush();
-    echo $this->twig->render('index/accueil.html.twig');
+    $user->getIsAuth();
+    
+      echo $this->twig->render('index/accueil.html.twig', [
+        'sessionSuccess' => $session->get('success'),
+        'isAuth' => $user->getIsAuth(),
+        'firstname' => $user->getFirstName()
+    ]);
+    $session->delete('success');
+    } else {
+      $session->set('logout', 'Vous êtes déconnecté!');
+      echo $this->twig->render('index/accueil.html.twig',[
+        'logout' => $session->get('logout')
+      ]);
+      $session->delete('logout');
+    }
+    
   }
-  #[Route(path: "/contact", name:"contact")]
-  public function contact()
-  {
-    echo $this->twig->render('index/contact.html.twig');
-  }
+ 
 }

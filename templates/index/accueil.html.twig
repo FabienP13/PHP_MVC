@@ -2,6 +2,16 @@
 	{% include 'partials/header.html.twig'%}
 	<body>
 		<div class="container">
+		{% if sessionSuccess %}
+		<div class="alert alert-success m-auto mt-2 col-3">
+			{{sessionSuccess ~ firstname ~ '!'}}
+		</div>
+		{% endif %}
+		{% if logout %}
+		<div class="alert alert-warning m-auto mt-2 col-3">
+			{{logout}}
+		</div>
+		{% endif %}
 		<h1>Accueil PHP MVC</h1>
 
 		<h3>Bienvenue sur notre projet PHP MVC from Scratch</h3>

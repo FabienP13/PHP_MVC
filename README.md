@@ -46,7 +46,7 @@ On a rajouté un attribut boolean isAuth dans notre entity User.php  qui a une v
 
 Quand un user se connecte, dans la fonction postLogin() de notre LoginController, après avoir vérifier que les identifiants étaient identiques à ceux enregistrés dans la base de données, on passe cette variable à 'true' pour que l'on puisse savoir si un utilisateur est connecté ou non. 
 
-4- Erreurs liées à la connexion
+4- Connexion 
     Il faut avoir des erreurs si l'utilisateur qui souhaite se connecter renseigne un mauvais email et/ou mot de passe. 
 
     Pour cela, on crée une classe Session.php avec 4 méthodes :
@@ -61,11 +61,15 @@ Quand un user se connecte, dans la fonction postLogin() de notre LoginController
     Pour ajouter des messages (error/success) liés à la connexion, nous avons ajouter une nouvelle clé et une nouvelle valeur, par exemple :
     $session->set('success', 'Vous êtes connecté ');
 
-    Une fois le message créé, on le passe en paramètre de notre view dans la fonction render() de twig avec d'autres paramètres pour avoir des informations sur la personne connectée : 
-    echo $this->twig->render('index/accueil.html.twig', [
+    On effectue une redirection avec la fonction header('Location : *URL*)
+
+    On passe des paramètres à notre view dans la fonction render() de twig pour pouvoir utiliser ces informations dans notre view 
+    Exemple : 
+    echo $this->twig->render('dashboard/dashboard.html.twig', [
          'sessionSuccess' => $session->get('success'),
          'isAuth' => $user->getIsAuth(),
-         'firstname' => $_SESSION['firstname']
+         'firstname' => $user->getFirstName()
     ]);
 
 
+-5 
