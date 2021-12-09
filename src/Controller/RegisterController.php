@@ -37,20 +37,25 @@ class RegisterController extends AbstractController
                 // si il n'exsite pas alors mettons en bdd
                     if (!$emailExist)
                     {
+                        if(strlen($_POST['password'])> 5 )
+                        {
                 
-                    $user = new User();
+                        $user = new User();
 
-                    $user->setName(trim($_POST['name']))
-                    ->setFirstName(trim($_POST['firstName']))
-                    ->setEmail(trim($_POST['email']))
-                    ->setUsername(trim($_POST['username']))
-                    ->setPassword(password_hash(trim($_POST['password']), PASSWORD_BCRYPT))
-                    ->setBirthDate(new dateTime($_POST['birthday'])); 
-                    
-                    $em->persist($user);
-                    $em->flush();
+                        $user->setName(trim($_POST['name']))
+                        ->setFirstName(trim($_POST['firstName']))
+                        ->setEmail(trim($_POST['email']))
+                        ->setUsername(trim($_POST['username']))
+                        ->setPassword(password_hash(trim($_POST['password']), PASSWORD_BCRYPT))
+                        ->setBirthDate(new dateTime($_POST['birthday'])); 
+                        
+                        $em->persist($user);
+                        $em->flush();
+                        } else {
+                            echo $err->errors['password'];
+                        }
 
-                    
+
 
                     }
                 //Si l'email existe si elle existe alors on renvoie une erreur
