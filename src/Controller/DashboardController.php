@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManager;
 
 class DashboardController extends AbstractController
 {
-    #[Route(path: "/dashboard")]
+    #[Route(path: "/dashboard", protected: true)]
     public function getDashboard(EntityManager $em, Session $session) {
         session_start();
         if(!empty($_SESSION) ){
