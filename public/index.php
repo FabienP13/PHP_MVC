@@ -18,6 +18,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Dotenv\Dotenv;
 use App\DependecyInjection\Container;
 use App\Routing\RouteNotFoundException;
+use App\Utils\Errors;
 
 // Env vars - Possibilité d'utiliser le pattern Adapter
 // Pour pouvoir varier les dépendances qu'on utilise
@@ -35,8 +36,10 @@ $twig = $twigEnvironment->init();
 //Container
 
 $container = new Container();
+$error = new Errors();
 $container->set(EntityManager::class, $entityManager);
 $container->set(Environment::class, $twig);
+$container->set(Errors::class, $error);
 
 // Routage
 $router = new Router($container);
