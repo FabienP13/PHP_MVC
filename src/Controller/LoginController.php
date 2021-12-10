@@ -18,6 +18,7 @@ class LoginController extends AbstractController
     #[Route(path: "/login")]
     public function getLogin()
     {
+        var_dump($_SESSION);
         echo $this->twig->render("login/login.html.twig");
     }
 
@@ -49,19 +50,12 @@ class LoginController extends AbstractController
                 if (password_verify($_POST['password'], $user->getPassword())) {
 
                     session_start();
-                    $_SESSION["id"] = $user->getId();
-                    $user->setIsAuth(true);
-                    $em->persist($user);
-                    $em->flush();
-
+                    $session->set('id',$user->getId());
                     $session->set('success', 'Vous êtes connecté ');
-
+                    
                     header("Location: http://localhost:8000/");
-                    echo $this->twig->render('index/accueil.html.twig', [
-                        'sessionSuccess' => $session->get('success'),
-                        'isAuth' => $user->getIsAuth(),
-                        'firstname' => $user->getFirstName()
-                    ]);
+                    exit();
+                   
                 }
                 //si password_verify() retourne false => mauvais mdp => message erreur
                 else {
@@ -75,23 +69,4 @@ class LoginController extends AbstractController
         }
     }
 
-    /**
-     * Permet de se déconnecter
-     * Suppression des données de $_SESSION
-     *
-     * @param EntityManager $em
-     * @return void
-     */
-    #[Route(path: '/logout')]
-    public function logout(EntityManager $em)
-    {
-        session_start();
-        $user = $em->getRepository(User::class)->find($_SESSION['id']);
-
-        session_destroy();
-        $user->setIsAuth(false);
-        $em->persist($user);
-        $em->flush();
-        header("Location: http://localhost:8000/");
-    }
 }

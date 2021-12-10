@@ -9,15 +9,15 @@ use Doctrine\ORM\EntityManager;
 
 class DashboardController extends AbstractController
 {
-    #[Route(path: "/dashboard", protected: true)]
+    #[Route(path: "/dashboard")]
     public function getDashboard(EntityManager $em, Session $session) {
         session_start();
+        var_dump($_SESSION);
         if(!empty($_SESSION) ){
         $user = $em->getRepository(User::class)->find($_SESSION['id']);
         
-        $user->getIsAuth();
           echo $this->twig->render('dashboard/dashboard.html.twig', [
-            'isAuth' => $user->getIsAuth(),
+            'sessionId' => $session->get('id'),
             'firstname' => $user->getFirstName()
         ]);
         } else {
