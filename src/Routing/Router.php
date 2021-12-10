@@ -41,7 +41,7 @@ class Router
       'url' => $url,
       'http_method' => $httpMethod,
       'controller' => $controller,
-      'method' => $method
+      'method' => $method,      
     ];
 
     return $this;
@@ -144,13 +144,13 @@ class Router
         {
           /** @var Route */
           $route = $attribute->newInstance();
-          
           $this->addRoute(
             $route->getName(),
             $route->getPath(),
             $route->getHttpMethod(),
             $fqcn,
-            $method->getName()
+            $method->getName(),
+            
           );
         }
       }

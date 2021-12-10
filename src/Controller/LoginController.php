@@ -16,10 +16,12 @@ class LoginController extends AbstractController
      * @return void
      */
     #[Route(path: "/login")]
-    public function getLogin()
+    public function getLogin(Session $session)
     {
-        var_dump($_SESSION);
-        echo $this->twig->render("login/login.html.twig");
+        echo $this->twig->render("login/login.html.twig", [
+            'notLogged' => $session->get('notLogged')
+        ]);
+        $session->delete('notLogged');
     }
 
     /**
@@ -34,7 +36,8 @@ class LoginController extends AbstractController
     #[Route(path: "/login", httpMethod: "POST", name: "login")]
     public function postLogin(EntityManager $em, Session $session)
     {
-
+        session_start();
+        
         if (isset($_POST['email']) && isset($_POST['password'])) {
             $user = $em->getRepository(User::class)->findOneBy(array('email' => $_POST['email']));
 
@@ -49,10 +52,9 @@ class LoginController extends AbstractController
                 //si password_verify() retourne true => création session + redirection page + message succès
                 if (password_verify($_POST['password'], $user->getPassword())) {
 
-                    session_start();
+                    
                     $session->set('id',$user->getId());
                     $session->set('success', 'Vous êtes connecté ');
-                    
                     header("Location: http://localhost:8000/");
                     exit();
                    

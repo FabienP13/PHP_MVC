@@ -10,12 +10,12 @@ class Route
     private string $name;
     private string $path;
     private string $httpMethod;
-    
 
     public function __construct(
         string $path,
         string $httpMethod = "GET",
-        string $name = "default",
+        string $name = "default"
+        
         
     )
     {
@@ -85,5 +85,4 @@ class Route
         return $this;
     }
 
-  
 }

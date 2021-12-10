@@ -11,17 +11,16 @@ class DashboardController extends AbstractController
 {
     #[Route(path: "/dashboard")]
     public function getDashboard(EntityManager $em, Session $session) {
-        session_start();
-        var_dump($_SESSION);
-        if(!empty($_SESSION) ){
-        $user = $em->getRepository(User::class)->find($_SESSION['id']);
+     
         
+        if(!empty($_SESSION) ){//Si User connecté, on affiche la page
+          session_start();
           echo $this->twig->render('dashboard/dashboard.html.twig', [
-            'sessionId' => $session->get('id'),
-            'firstname' => $user->getFirstName()
+            'sessionId' => $session->get('id')
         ]);
-        } else {
-          echo $this->twig->render('dashboard/dashboard.html.twig');
+        } else { //si non connecté + redirection page login + message erreur
+          $session->set('notLogged','Vous devez être connecté pour accèder à cette page');
+          header("Location: http://localhost:8000/login");
         }
     }
 }

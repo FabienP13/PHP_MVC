@@ -15,17 +15,17 @@ class IndexController extends AbstractController
   {
     
     session_start();
-    var_dump($_SESSION);
     if(!empty($_SESSION) ){ 
-    
     $user = $em->getRepository(User::class)->find($_SESSION['id']);
       
       echo $this->twig->render('index/accueil.html.twig', [
         'sessionSuccess' => $session->get('success'),
         'sessionId' => $session->get('id'),
+        'connected' => $session->get('connected'),
         'firstname' => $user->getFirstName()
     ]);
     $session->delete('success');
+    $session->delete('connected');
     } else {
       echo $this->twig->render('index/accueil.html.twig');
     }

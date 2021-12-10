@@ -46,6 +46,7 @@ $container->set(Session::class, $session);
 $router = new Router($container);
 $router->registerRoutes();
 
+
 if (php_sapi_name() == 'cli'){
   return;
 }
@@ -53,6 +54,7 @@ if (php_sapi_name() == 'cli'){
 
 $requestUri = $_SERVER['REQUEST_URI'];
 $requestMethod = $_SERVER['REQUEST_METHOD'];
+
 
 try {
   $router->execute($requestUri, $requestMethod);
