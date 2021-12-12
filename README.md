@@ -7,11 +7,11 @@
   - [Récupérer les informations de la personne qui se connecte](#récupérer-les-informations-de-la-personne-qui-se-connecte)
 - [Session](#créer-une-session)
 - [Les redirections](#les-redirections)
-- [Authentification](#l'authentification)
+- [Authentification](#l-'-authentification)
   - [Méthode n°1](#méthode-1)
   - [Méthode n°2](#méthode-2)
-- [Gestion des erreurs](#message-d'erreur)
-  - [Partie Register](#partie-register})
+- [Gestion des erreurs](#message-d-'-erreur)
+  - [Partie Register](#partie-register)
   - [Partie Login](#partie-login)
 
 ## Introduction 
