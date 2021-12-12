@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Config\Request;
 use App\Entity\User;
 use App\Routing\Attribute\Route;
+use App\Session\Session;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use App\Utils\Errors;
@@ -13,15 +14,24 @@ use App\Utils\Errors;
 class RegisterController extends AbstractController
 {
     #[Route(path:'/register')]
-    public function getRegister()
+    public function getRegister(Session $session)
     {
-        echo $this->twig->render('register/register.html.twig');
+        session_start();
+        if(empty($_SESSION)){
+            echo $this->twig->render('register/register.html.twig');
+        } else {
+            $session->set('connected', 'Vous n\'avez pas accès à cette page car vous êtes déjà enregistré. ');
+            header("Location: http://localhost:8000/");
+        }
+        
     }
 
 
     #[Route(path:'/register/post', httpMethod:'POST')]
     public function postRegister(EntityManager $em, Errors $err)
     {
+
+                    
       
         if(!empty($_POST)){
             //vérifie que les champs sont saisies
@@ -95,6 +105,7 @@ class RegisterController extends AbstractController
                     ]);
             
         }
+
        
     }
 }

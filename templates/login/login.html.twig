@@ -1,38 +1,47 @@
 {% include 'partials/header.html.twig'%}
 
 
+<div
+	class="container">
+	{# Si mauvais password #}
+	{% if badPassword %}
+		<div class="alert alert-danger m-auto mt-2 col-4">
+			{{badPassword}}
+		</div>
+	{% endif %}
+	{# Si mauvais email #}
+	{% if badEmail %}
+		<div class="alert alert-danger m-auto mt-2 col-4">
+			{{badEmail}}
+		</div>
+	{% endif %}
+	{# Si redirection car non enregistré #}
+	{% if notLogged %}
+		<div class="alert alert-danger m-auto mt-2 col-6">
+			{{notLogged}}
+		</div>
+	{% endif %}
+	<div class="col-4 m-auto">
+		<h1>Connectez-vous</h1>
 
+		<form action="/login" method="post">
+			<div class="form-group">
+				<label for="email">Email
+				</label>
+				<input type="email" name="email" class="form-control" id="email" placeholder="email@example.com" required>
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
+			</div>
+			<button type="submit" class="btn btn-primary mt-2">Sign in</button>
+		</form>
+		<p>Pas encore de compte ?
+			<a href="/register">
+				S'enregistrer</a>
+		</p>
 
-
-<div class="container col-4">
-{# Si mauvais password #}
-{% if badPassword %}
-<div class="alert alert-danger mt-2">
-{{badPassword}}
+	</div>
 </div>
-{% endif %}
-{# Si mauvais email #}
-{% if badEmail %}
-<div class="alert alert-danger mt-2">
-{{badEmail}}
-</div>
-{% endif %}
-  <h1>Connectez-vous</h1>
-    
-        <form action="/login" method="post">
-        <div class="form-group">
-            <label for="email">Email </label>
-            <input type="email" name="email" class="form-control" id="email" placeholder="email@example.com" required>
-        </div>
-         <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
-        </div>
-            <button type="submit" class="btn btn-primary mt-2">Sign in</button>
-        </form>
-        <p>Pas encore de compte ? <a href="/register"> S'enregistrer</a></p> 
-
-    </div>
-
 </body>
 </html>
