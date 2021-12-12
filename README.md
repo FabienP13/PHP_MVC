@@ -7,10 +7,10 @@
   - [Récupérer les informations de la personne qui se connecte](#récupérer-les-informations-de-la-personne-qui-se-connecte)
 - [Session](#créer-une-session)
 - [Les redirections](#les-redirections)
-- [Authentification](#l-'-authentification)
+- [Authentification](#authentification)
   - [Méthode n°1](#méthode-1)
   - [Méthode n°2](#méthode-2)
-- [Gestion des erreurs](#message-d-'-erreur)
+- [Gestion des erreurs](#message-erreur)
   - [Partie Register](#partie-register)
   - [Partie Login](#partie-login)
 
@@ -195,7 +195,7 @@ $user = $em->getRepository(User::class)->find($_SESSION['id']);
     ]);
 ```
 
-## L'authentification
+## Authentification
 
 Dans le but de restreindre l'accès à la page dashboard (seulement si connecté) ou à la page Register(si on est déjà connecté), on a essayé 2 voies :
 
@@ -243,7 +243,7 @@ On a donc opté pour une seconde option pour restreindre l'accès à certaines p
 
 Nous sommes conscient que ce n'est pas la meilleure option mais nous voulions que notre projet soit fonctionnel.
 
-## Message d'erreur 
+## Message erreur 
 
 Nous avons utilisé une façon différente de gérer les erreurs dans login et register pour présenter
 les différentes manières mais également car nous étions à l'aise qu'avec notre méthode.
