@@ -12,9 +12,9 @@ class DashboardController extends AbstractController
     #[Route(path: "/dashboard")]
     public function getDashboard(EntityManager $em, Session $session) {
      
-        
+        session_start();
         if(!empty($_SESSION) ){//Si User connecté, on affiche la page
-          session_start();
+          
           echo $this->twig->render('dashboard/dashboard.html.twig', [
             'sessionId' => $session->get('id')
         ]);
