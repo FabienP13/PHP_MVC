@@ -1,6 +1,11 @@
 {% include 'partials/header.html.twig'%}
 <div class="container">
 
+    {% if msg %}
+    <div class="alert alert-danger mt-2">
+        {{msg}}
+    </div>
+    {% endif %}
     <h1>Veuillez vous enregistrer</h1>
     <form method="POST" action="/register/post">
 
