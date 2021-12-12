@@ -295,7 +295,9 @@ Pour l'afficher, on va mettre une condition pour savoir si la variable est vide,
 > {{badEmail}}
 
 > {% endif %}
+
 On s'est rendu compte que ce message persistait vu qu'il était enregistré dans `$_SESSION`. On a donc rajouter une ligne après l'affichage de notre view pour supprimer ce message : 
+
 > $session->delete('errorEmail');
         
 C'est fonctionnel, mais nous sommes conscient que ce n'est pas optimisé !
