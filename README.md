@@ -7,9 +7,9 @@
   - [Récupérer les informations de la personne qui se connecte](#récupérer-les-informations-de-la-personne-qui-se-connecte)
 - [Session](#créer-une-session)
 - [Les redirections](#les-redirections)
-- [Authentification](#l'authentification/accès-réservé-à-certaines-pages)
-  - [Méthode n°1](#méthode-n°1)
-  - [Méthode n°2](#méthode-n°2)
+- [Authentification](#l'authentification)
+  - [Méthode n°1](#méthode-1)
+  - [Méthode n°2](#méthode-2)
 - [Gestion des erreurs](#message-d'erreur)
   - [Partie Register](#partie-register})
   - [Partie Login](#partie-login)
@@ -195,11 +195,12 @@ $user = $em->getRepository(User::class)->find($_SESSION['id']);
     ]);
 ```
 
-## L'authentification/accès réservé à certaines pages
+## L'authentification
 
 Dans le but de restreindre l'accès à la page dashboard (seulement si connecté) ou à la page Register(si on est déjà connecté), on a essayé 2 voies :
 
-### Méthode n°1
+### Méthode 1
+
 Tout d'abord, nous avons cherché à ajouter une **nouvelle propriété** aux attributs d'une route. Par exemple, pour la route dashboard faire comme ceci : 
 > #[Route(path: "/dashboard", protected:"true")]
 
@@ -235,7 +236,8 @@ Dans notre **fichier bootstrap** de notre projet, il a fallu ajouter cet attribu
 Notre problème est arrivé à ce moment là : 
 nous avons jamais réussi à modifier la valeur de l'attribut **`$protected`** quand une session était créée. 
 
-### Méthode n°2
+### Méthode 2
+
 On a donc opté pour une seconde option pour restreindre l'accès à certaines pages :
 > if(!empty($_SESSION) " dans nos controlleurs.
 
@@ -249,6 +251,7 @@ Bien entendu, nous sommes conscients qu'il faille utiliser qu'une seul manière 
 de bonne pratiques !
 
 ### Partie register
+
 Il a fallu gérer les erreurs (dans le cas où les conditions vu dans le [controller](#le-controller) ne sont pas respéctées), pour cela nous avons créer une classe `Errors.php`, en y mettant les attributs et un tableau d'Errors. Ce tableau d'erreurs se présente sous cette forme :
 
 ```php
