@@ -26,8 +26,7 @@ Nous allons donc tenter d'expliquer le plus clairement possible le déroulé de 
 Premièrement, on a commencé par créer la vue (‘register.twig.html), où l’utilisateur peut remplir les champs pour créer un compte et s'enregistrer. 
 Nous avons donc mis un formulaire avec des inputs de type « text » pour les champs nom, prénom et username, un input de type « email » pour l’email, un input « date » pour le birthday et un input de type « password » pour le mot de passe. Sans oublier le bouton dans le formulaire qui prendra le type « submit » pour soumettre les informations. Le formulaire prendra l’action « /register » et la méthode « POST », cela fera référence à la route que l’on aura défini pour la fonction « postRegister » :
 
-`
-<form method="POST" action="/register/post">
+`<form method="POST" action="/register/post">
 
 <p>Nom :</p>
 <input type="text" name="name" required>
@@ -50,8 +49,7 @@ Nous avons donc mis un formulaire avec des inputs de type « text » pour les ch
 <button type="submit">S'enregistrer</button>
         
 
-</form>
-`
+</form>`
 
 Ainsi ça route sera "#[Route(path:'/register')]".
 Pour accéder à  la vue du formulaire, nous avons créer une fonction "getRegister" qui retournera "/register" en "get".
